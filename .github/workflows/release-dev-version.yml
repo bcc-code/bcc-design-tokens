@@ -1,0 +1,48 @@
+name: Release Dev Version
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use cached node_modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Resolve version
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: 'Version based on commit: 0.0.0-dev.${{ env.sha_short }}'
+        run: npm version 0.0.0-dev.${{ env.sha_short }} --force --no-git-tag-version
+
+      - name: Publish
+        run: npm publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
