@@ -1,0 +1,30 @@
+{
+  "name": "@bcc-code/design-system-tokens",
+  "repository": "https://github.com/bcc-code/bcc-design.git",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "dist_types"
+  ],
+  "main": "./dist/design-system-tokens.umd.cjs",
+  "module": "./dist/design-system-tokens.js",
+  "types": "./dist_types/index.d.ts",
+  "exports": {
+    "import": "./dist/design-system-tokens.js",
+    "require": "./dist/design-system-tokens.umd.cjs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --declaration --emitDeclarationOnly -p tsconfig.compile.json && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0"
+  }
+}
