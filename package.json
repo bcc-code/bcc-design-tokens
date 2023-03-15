@@ -19,12 +19,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --declaration --emitDeclarationOnly -p tsconfig.compile.json && vite build",
+    "build:tokens": "token-transformer src/input/figma.json temp/figma-transformed.json",
     "preview": "vite preview"
   },
   "peerDependencies": {
     "tailwindcss": "^3.2.4"
   },
   "devDependencies": {
+    "token-transformer": "^0.0.30",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }
