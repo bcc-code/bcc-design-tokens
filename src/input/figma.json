@@ -1924,7 +1924,7 @@
           }
         }
       },
-      "on surface": {
+      "on-surface": {
         "primary": {
           "default": {
             "value": "{colors.neutral.0}",
