@@ -1,4 +1,4 @@
-export const borderColor = {
+export const outlineColor = {
   "on-primary": "#e5e7eb",
   "on-secondary": "#d1d5db",
   "on-tertiary": "#9ca3af",

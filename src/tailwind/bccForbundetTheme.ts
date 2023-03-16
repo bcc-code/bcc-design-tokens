@@ -3,6 +3,7 @@ import { fontFamily } from "./fontFamily";
 import { textColor } from "./textColor";
 import { borderColor } from "./borderColor";
 import { backgroundColor } from "./backgroundColor";
+import { outlineColor } from "./outlineColor";
 import { Config } from "tailwindcss";
 
 const bccForbundetTheme: Partial<Config> = {
@@ -13,6 +14,7 @@ const bccForbundetTheme: Partial<Config> = {
       textColor,
       borderColor,
       backgroundColor,
+      outlineColor,
     },
   },
 };
