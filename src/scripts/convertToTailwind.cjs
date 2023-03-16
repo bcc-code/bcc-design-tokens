@@ -15,30 +15,61 @@ async function writeColors(figmaInput) {
 }
 
 async function writeTextColors(figmaInput) {
-  const textColors = figmaInput.global.text;
+  const globalTextColor = figmaInput.global.text;
 
-  for (let [tokenKey, tokenValue] of Object.entries(textColors)) {
-    textColors[tokenKey] = tokenValue.value;
+  for (let [tokenKey, tokenValue] of Object.entries(globalTextColor)) {
+    globalTextColor[tokenKey] = tokenValue.value;
   }
 
-  let content = `export const textColor = ${JSON.stringify(textColors, null, 2)};`
+  const buttonOnSurfaceColors = figmaInput.button['on-surface'];
+
+  for (let [variantKey] of Object.entries(buttonOnSurfaceColors)) {
+    for (let [tokenKey, tokenValue] of Object.entries(buttonOnSurfaceColors[variantKey])) {
+      buttonOnSurfaceColors[variantKey][tokenKey] = tokenValue.value;
+    }
+  }
+
+  const textColor = {
+    ...globalTextColor,
+    button: buttonOnSurfaceColors,
+  }
+
+  let content = `export const textColor = ${JSON.stringify(textColor, null, 2)};`
 
   await fs.writeFile('./src/tailwind/textColor.ts', content, 'utf8');
 }
 
 async function writeBorderColors(figmaInput) {
-  const borderColors = figmaInput.global.border;
+  const globalBorderColor = figmaInput.global.border;
 
-  for (let [tokenKey, tokenValue] of Object.entries(borderColors)) {
-    borderColors[tokenKey] = tokenValue.value;
+  for (let [tokenKey, tokenValue] of Object.entries(globalBorderColor)) {
+    globalBorderColor[tokenKey] = tokenValue.value;
   }
 
-  let content = `export const borderColor = ${JSON.stringify(borderColors, null, 2)};`
+  const buttonBorderColor = figmaInput.button.border;
+
+  for (let [variantKey] of Object.entries(buttonBorderColor)) {
+    for (let [tokenKey, tokenValue] of Object.entries(buttonBorderColor[variantKey])) {
+      buttonBorderColor[variantKey][tokenKey] = tokenValue.value;
+    }
+  }
+
+  const borderColor = {
+    ...globalBorderColor,
+    button: buttonBorderColor,
+  }
+
+  let content = `export const borderColor = ${JSON.stringify(borderColor, null, 2)};`
 
   await fs.writeFile('./src/tailwind/borderColor.ts', content, 'utf8');
+
+  let outlineContent = `export const outlineColor = ${JSON.stringify(borderColor, null, 2)};`
+
+  await fs.writeFile('./src/tailwind/outlineColor.ts', outlineContent, 'utf8');
 }
 
 async function writeBackgroundColors(figmaInput) {
+  // Normal surface
   const surfaceColors = figmaInput.global.surface;
 
   for (let [variantKey] of Object.entries(surfaceColors)) {
@@ -47,6 +78,16 @@ async function writeBackgroundColors(figmaInput) {
     }
   }
 
+  // Button surface
+  const buttonSurfaceColors = figmaInput.button.surface;
+
+  for (let [variantKey] of Object.entries(buttonSurfaceColors)) {
+    for (let [tokenKey, tokenValue] of Object.entries(buttonSurfaceColors[variantKey])) {
+      buttonSurfaceColors[variantKey][tokenKey] = tokenValue.value;
+    }
+  }
+
+  // Global background
   const backgroundColors = figmaInput.global.background;
 
   for (let [tokenKey, tokenValue] of Object.entries(backgroundColors)) {
@@ -55,6 +96,7 @@ async function writeBackgroundColors(figmaInput) {
 
   const backgroundColor = {
     ...backgroundColors,
+    button: buttonSurfaceColors,
     surface: surfaceColors,
   }
 

@@ -7,5 +7,25 @@ export const textColor = {
   "success": "#0a5d2f",
   "info": "#194e8f",
   "system": "#0d5154",
-  "brand": "#004e48"
+  "brand": "#004e48",
+  "button": {
+    "primary": {
+      "default": "#ffffff",
+      "disabled": "#6b7280"
+    },
+    "secondary": {
+      "default": "#30715e",
+      "hover": "#2a5b4e",
+      "pressed": "#3e8e75",
+      "disabled": "#6b7280",
+      "focused": "#30715e"
+    },
+    "tertiary": {
+      "default": "#30715e",
+      "hover": "#2a5b4e",
+      "pressed": "#3e8e75",
+      "disabled": "#6b7280",
+      "focused": "#30715e"
+    }
+  }
 };
