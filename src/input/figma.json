@@ -2024,12 +2024,6 @@
             "value": "{colors.silver-tree.900}",
             "type": "color"
           }
-        },
-        "tertiary": {
-          "focused": {
-            "value": "{colors.silver-tree.900}",
-            "type": "color"
-          }
         }
       }
     },
