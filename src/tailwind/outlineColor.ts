@@ -8,6 +8,7 @@ export const outlineColor = {
   "warning": "#72461166",
   "danger": "#8b102f66",
   "brand": "#004e48",
+  "focused": "#111827",
   "button": {
     "primary": {
       "default": "#30715e",
@@ -21,9 +22,6 @@ export const outlineColor = {
       "hover": "#2a5b4e",
       "pressed": "#3e8e75",
       "disabled": "#d1d5db",
-      "focused": "#223f37"
-    },
-    "tertiary": {
       "focused": "#223f37"
     }
   }

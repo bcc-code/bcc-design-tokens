@@ -18,8 +18,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --declaration --emitDeclarationOnly -p tsconfig.compile.json && vite build",
+    "build": "npm run build:tokens && npm run build:tailwind",
     "build:tokens": "token-transformer src/input/figma.json temp/figma-transformed.json",
+    "build:tailwind": "node ./src/scripts/convertToTailwind.cjs",
     "preview": "vite preview"
   },
   "peerDependencies": {
