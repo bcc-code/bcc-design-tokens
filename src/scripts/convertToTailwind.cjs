@@ -1,5 +1,30 @@
 const fs = require('fs').promises;
 
+function getButtonColors(buttonVariants, type) {
+  let buttonColors = {};
+
+  // variantKey = primary, secondary etc.
+  for (let [variantKey] of Object.entries(buttonVariants)) {
+    // itemKey = background, foreground, border etc.
+    for (let [itemKey, itemValue] of Object.entries(buttonVariants[variantKey])) {
+      if (itemKey === type) {
+        buttonColors[variantKey] = {};
+
+        // tokenKey = default, hover, pressed etc.
+        // tokenValue = hex color value
+        for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
+          if (tokenKey === 'default') {
+            tokenKey = 'DEFAULT';
+          }
+          buttonColors[variantKey][tokenKey] = tokenValue.value;
+        }
+      }
+    }
+  }
+
+  return buttonColors;
+}
+
 async function writeColors(figmaInput) {
   let colors = figmaInput.colors;
 
@@ -21,24 +46,7 @@ async function writeTextColors(figmaInput) {
     globalTextColor[tokenKey] = tokenValue.value;
   }
 
-  const buttonVariants = figmaInput.button;
-  let buttonForegroundColors = {};
-
-  // variantKey = primary, secondary etc.
-  for (let [variantKey] of Object.entries(buttonVariants)) {
-    // itemKey = background, foreground, border etc.
-    for (let [itemKey, itemValue] of Object.entries(buttonVariants[variantKey])) {
-      if (itemKey === 'foreground') {
-        buttonForegroundColors[variantKey] = {};
-
-        // tokenKey = default, hover, pressed etc.
-        // tokenValue = hex color value
-        for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
-          buttonForegroundColors[variantKey][tokenKey] = tokenValue.value;
-        }
-      }
-    }
-  }
+  const buttonForegroundColors = getButtonColors(figmaInput.button, 'foreground');
 
   const textColor = {
     ...globalTextColor,
@@ -57,24 +65,7 @@ async function writeBorderColors(figmaInput) {
     globalBorderColor[tokenKey] = tokenValue.value;
   }
 
-  const buttonVariants = figmaInput.button;
-  let buttonBorderColors = {};
-
-  // variantKey = primary, secondary etc.
-  for (let [variantKey] of Object.entries(buttonVariants)) {
-    // itemKey = background, foreground, border etc.
-    for (let [itemKey, itemValue] of Object.entries(buttonVariants[variantKey])) {
-      if (itemKey === 'border') {
-        buttonBorderColors[variantKey] = {};
-
-        // tokenKey = default, hover, pressed etc.
-        // tokenValue = hex color value
-        for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
-          buttonBorderColors[variantKey][tokenKey] = tokenValue.value;
-        }
-      }
-    }
-  }
+  const buttonBorderColors = getButtonColors(figmaInput.button, 'border');
 
   const borderColor = {
     ...globalBorderColor,
@@ -101,24 +92,7 @@ async function writeBackgroundColors(figmaInput) {
   }
 
   // Button background
-  const buttonVariants = figmaInput.button;
-  let buttonBackgroundColors = {};
-
-  // variantKey = primary, secondary etc.
-  for (let [variantKey] of Object.entries(buttonVariants)) {
-    // itemKey = background, foreground, border etc.
-    for (let [itemKey, itemValue] of Object.entries(buttonVariants[variantKey])) {
-      if (itemKey === 'background') {
-        buttonBackgroundColors[variantKey] = {};
-
-        // tokenKey = default, hover, pressed etc.
-        // tokenValue = hex color value
-        for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
-          buttonBackgroundColors[variantKey][tokenKey] = tokenValue.value;
-        }
-      }
-    }
-  }
+  const buttonBackgroundColors = getButtonColors(figmaInput.button, 'background');
 
   const backgroundColor = {
     ...backgroundColors,

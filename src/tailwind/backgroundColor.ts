@@ -33,21 +33,21 @@ export const backgroundColor = {
   },
   "button": {
     "primary": {
-      "default": "#30715e",
+      "DEFAULT": "#30715e",
       "hover": "#2a5b4e",
       "pressed": "#3e8e75",
       "disabled": "#d1d5db",
       "focused": "#30715e"
     },
     "secondary": {
-      "default": "#ffffff",
+      "DEFAULT": "#ffffff",
       "hover": "#f3faf7",
       "pressed": "#f3faf7",
       "disabled": "#f9fafb",
       "focused": "#f3faf7"
     },
     "tertiary": {
-      "default": "#ffffff",
+      "DEFAULT": "#ffffff",
       "hover": "#f3faf7",
       "pressed": "#f3faf7",
       "disabled": "#ffffff",

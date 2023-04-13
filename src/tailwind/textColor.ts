@@ -10,18 +10,18 @@ export const textColor = {
   "brand": "#004e48",
   "button": {
     "primary": {
-      "default": "#ffffff",
+      "DEFAULT": "#ffffff",
       "disabled": "#6b7280"
     },
     "secondary": {
-      "default": "#30715e",
+      "DEFAULT": "#30715e",
       "hover": "#2a5b4e",
       "pressed": "#3e8e75",
       "disabled": "#6b7280",
       "focused": "#30715e"
     },
     "tertiary": {
-      "default": "#30715e",
+      "DEFAULT": "#30715e",
       "hover": "#2a5b4e",
       "pressed": "#3e8e75",
       "disabled": "#6b7280",

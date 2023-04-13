@@ -11,14 +11,14 @@ export const borderColor = {
   "focused": "#111827",
   "button": {
     "primary": {
-      "default": "#30715e",
+      "DEFAULT": "#30715e",
       "hover": "#30715e",
       "pressed": "#3e8e75",
       "disabled": "#d1d5db",
       "focused": "#223f37"
     },
     "secondary": {
-      "default": "#30715e",
+      "DEFAULT": "#30715e",
       "hover": "#2a5b4e",
       "pressed": "#3e8e75",
       "disabled": "#d1d5db",
