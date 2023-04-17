@@ -1,33 +1,41 @@
 export const backgroundColor = {
-  "primary": {},
-  "secondary": {},
+  "page": {
+    "primary": "#F9FAFB",
+    "secondary": "#FFFFFF"
+  },
+  "primary": {
+    "DEFAULT": "#FFFFFF"
+  },
+  "secondary": {
+    "DEFAULT": "#ECF1F1"
+  },
   "tertiary": {
-    "default": "#E6EDED",
+    "DEFAULT": "#E6EDED",
     "hover": "#E1E8E9",
     "active": "#DCE4E4"
   },
   "danger": {
-    "default": "#fff1f1",
+    "DEFAULT": "#fff1f1",
     "hover": "#ffe3e3",
     "pressed": "#FFD8D6"
   },
   "success": {
-    "default": "#eefff4",
+    "DEFAULT": "#eefff4",
     "hover": "#d7ffe7",
     "pressed": "#CCFFE0"
   },
   "warning": {
-    "default": "#fefde8",
+    "DEFAULT": "#fefde8",
     "hover": "#fffdc2",
     "pressed": "#FFFC99"
   },
   "info": {
-    "default": "#eef9ff",
+    "DEFAULT": "#eef9ff",
     "hover": "#d9f1ff",
     "pressed": "#CCECFF"
   },
   "system": {
-    "default": "#effefd",
+    "DEFAULT": "#effefd",
     "hover": "#c7fffa",
     "pressed": "#BDFFF9"
   },

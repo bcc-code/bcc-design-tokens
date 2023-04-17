@@ -13,9 +13,6 @@ function getButtonColors(buttonVariants, type) {
         // tokenKey = default, hover, pressed etc.
         // tokenValue = hex color value
         for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
-          if (tokenKey === 'default') {
-            tokenKey = 'DEFAULT';
-          }
           buttonColors[variantKey][tokenKey] = tokenValue.value;
         }
       }
@@ -23,6 +20,13 @@ function getButtonColors(buttonVariants, type) {
   }
 
   return buttonColors;
+}
+
+async function writeTailwindConfig(file, content) {
+  // Simplifies class names so bg-info-default becomes bg-info
+  content = content.replaceAll("default", "DEFAULT");
+
+  await fs.writeFile(file, content, 'utf8');
 }
 
 async function writeColors(figmaInput) {
@@ -36,7 +40,7 @@ async function writeColors(figmaInput) {
 
   let content = `export const colors = ${JSON.stringify(colors, null, 2)};`
 
-  await fs.writeFile('./src/tailwind/colors.ts', content, 'utf8');
+  await writeTailwindConfig('./src/tailwind/colors.ts', content);
 }
 
 async function writeTextColors(figmaInput) {
@@ -55,7 +59,7 @@ async function writeTextColors(figmaInput) {
 
   let content = `export const textColor = ${JSON.stringify(textColor, null, 2)};`
 
-  await fs.writeFile('./src/tailwind/textColor.ts', content, 'utf8');
+  await writeTailwindConfig('./src/tailwind/textColor.ts', content);
 }
 
 async function writeBorderColors(figmaInput) {
@@ -74,14 +78,23 @@ async function writeBorderColors(figmaInput) {
 
   let content = `export const borderColor = ${JSON.stringify(borderColor, null, 2)};`
 
-  await fs.writeFile('./src/tailwind/borderColor.ts', content, 'utf8');
+  await writeTailwindConfig('./src/tailwind/borderColor.ts', content);
 
   let outlineContent = `export const outlineColor = ${JSON.stringify(borderColor, null, 2)};`
 
-  await fs.writeFile('./src/tailwind/outlineColor.ts', outlineContent, 'utf8');
+  await writeTailwindConfig('./src/tailwind/outlineColor.ts', outlineContent);
 }
 
 async function writeBackgroundColors(figmaInput) {
+  // Page background
+  // TODO hardcoded value because it's missing from the tokens
+  const pageBackground = {
+    'page': {
+      'primary': "#F9FAFB",
+      'secondary': "#FFFFFF", 
+    }
+  }
+
   // Normal background
   const backgroundColors = figmaInput.global.background;
 
@@ -91,17 +104,22 @@ async function writeBackgroundColors(figmaInput) {
     }
   }
 
+  // TODO hardcoded value because it's missing from the tokens
+  backgroundColors.primary.default = "#FFFFFF";
+  backgroundColors.secondary.default = "#ECF1F1";
+
   // Button background
   const buttonBackgroundColors = getButtonColors(figmaInput.button, 'background');
 
   const backgroundColor = {
+    ...pageBackground,
     ...backgroundColors,
     button: buttonBackgroundColors,
   }
 
   let content = `export const backgroundColor = ${JSON.stringify(backgroundColor, null, 2)};`
 
-  await fs.writeFile('./src/tailwind/backgroundColor.ts', content, 'utf8');
+  await writeTailwindConfig('./src/tailwind/backgroundColor.ts', content);
 }
 
 async function getFigmaInput() {
