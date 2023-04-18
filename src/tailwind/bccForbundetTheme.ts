@@ -9,13 +9,15 @@ import { Config } from "tailwindcss";
 
 const bccForbundetTheme: Partial<Config> = {
   theme: {
-      fontFamily,
-      colors,
-      textColor,
-      borderColor,
-      backgroundColor,
-      outlineColor,
-      ringColor,
+      extend: {
+        fontFamily,
+        colors,
+        textColor,
+        borderColor,
+        backgroundColor,
+        outlineColor,
+        ringColor,
+      }
     },
 };
 
