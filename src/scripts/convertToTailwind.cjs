@@ -77,12 +77,13 @@ async function writeBorderColors(figmaInput) {
   }
 
   let content = `export const borderColor = ${JSON.stringify(borderColor, null, 2)};`
-
   await writeTailwindConfig('./src/tailwind/borderColor.ts', content);
 
   let outlineContent = `export const outlineColor = ${JSON.stringify(borderColor, null, 2)};`
-
   await writeTailwindConfig('./src/tailwind/outlineColor.ts', outlineContent);
+  
+  let ringContent = `export const ringColor = ${JSON.stringify(borderColor, null, 2)};`
+  await writeTailwindConfig('./src/tailwind/ringColor.ts', ringContent);
 }
 
 async function writeBackgroundColors(figmaInput) {
