@@ -9,7 +9,6 @@ import { Config } from "tailwindcss";
 
 const bccForbundetTheme: Partial<Config> = {
   theme: {
-    extend: {
       fontFamily,
       colors,
       textColor,
@@ -18,7 +17,6 @@ const bccForbundetTheme: Partial<Config> = {
       outlineColor,
       ringColor,
     },
-  },
 };
 
-export default bccForbundetTheme.theme;
+export default bccForbundetTheme;
