@@ -13,5 +13,12 @@ In Figma the [Tokens Studio](https://www.figma.com/community/plugin/843461159747
 
 This Style Dictionary format is then taken by our custom `convertToTailwind` script that converts this output to a Tailwind theme. This script is intentionally custom because we want to do some transformations that are not available with the existing Tailwind plugin for Style Dictionary, like stripping off some naming that designers add that we don't need on our side
 
+## Building locally
+To build the Tailwind theme locally, run
+```sh
+pnpm build
+```
+This will update the files in `src/tailwind` to the latest tokens from the input. Be sure to commit these changes and release a new version.
+
 ## License
 This package is licensed under the [Apache 2.0 license](./LICENSE).
