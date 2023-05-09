@@ -1,28 +1,17 @@
 export const borderColor = {
-  "on-primary": "#e5e7eb",
-  "on-secondary": "#d1d5db",
-  "on-tertiary": "#9ca3af",
-  "system": "#0d505466",
-  "info": "#194e8f66",
-  "success": "#0a5d2f66",
-  "warning": "#72461166",
-  "danger": "#8b102f66",
-  "brand": "#004e48",
-  "focused": "#111827",
+  "on-primary": "var(--neutral-200)",
+  "on-secondary": "var(--neutral-300)",
+  "on-tertiary": "var(--neutral-400)",
   "button": {
     "primary": {
-      "DEFAULT": "#30715e",
-      "hover": "#30715e",
-      "pressed": "#3e8e75",
-      "disabled": "#d1d5db",
-      "focused": "#223f37"
+      "DEFAULT": "var(--silver-tree-600)",
+      "hover": "var(--silver-tree-600)",
+      "pressed": "var(--silver-tree-500)"
     },
     "secondary": {
-      "DEFAULT": "#30715e",
-      "hover": "#2a5b4e",
-      "pressed": "#3e8e75",
-      "disabled": "#d1d5db",
-      "focused": "#223f37"
+      "DEFAULT": "var(--silver-tree-600)",
+      "hover": "var(--silver-tree-700)",
+      "pressed": "var(--silver-tree-500)"
     }
   }
 };

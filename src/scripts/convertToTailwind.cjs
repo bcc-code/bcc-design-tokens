@@ -1,5 +1,16 @@
 const fs = require('fs').promises;
 
+function getCssVariable(token) {
+  if (!token.startsWith('{colors.')) {
+    return token;
+  }
+
+  return token
+    .replaceAll('{colors.', 'var(--')
+    .replaceAll('}', ')')
+    .replaceAll('.', '-');
+}
+
 function getButtonColors(buttonVariants, type) {
   let buttonColors = {};
 
@@ -13,7 +24,7 @@ function getButtonColors(buttonVariants, type) {
         // tokenKey = default, hover, pressed etc.
         // tokenValue = hex color value
         for (let [tokenKey, tokenValue] of Object.entries(itemValue)) {
-          buttonColors[variantKey][tokenKey] = tokenValue.value;
+          buttonColors[variantKey][tokenKey] = getCssVariable(tokenValue.value);
         }
       }
     }
@@ -30,11 +41,11 @@ async function writeTailwindConfig(file, content) {
 }
 
 async function writeColors(figmaInput) {
-  let colors = figmaInput.colors;
+  let colors = figmaInput.reference.colors;
 
   for (let [colorKey] of Object.entries(colors)) {
     for (let [colorWeightKey, colorWeightToken] of Object.entries(colors[colorKey])) {
-      colors[colorKey][colorWeightKey] = colorWeightToken.value;
+      colors[colorKey][colorWeightKey] = `var(--${colorKey}-${colorWeightKey})`;
     }
   }
 
@@ -43,14 +54,14 @@ async function writeColors(figmaInput) {
   await writeTailwindConfig('./src/tailwind/colors.ts', content);
 }
 
-async function writeTextColors(figmaInput) {
-  const globalTextColor = figmaInput.global.foreground;
+async function writeTextColors(aliasTokens) {
+  const globalTextColor = aliasTokens.global.foreground;
 
   for (let [tokenKey, tokenValue] of Object.entries(globalTextColor)) {
-    globalTextColor[tokenKey] = tokenValue.value;
+    globalTextColor[tokenKey] = getCssVariable(tokenValue.value);
   }
 
-  const buttonForegroundColors = getButtonColors(figmaInput.button, 'foreground');
+  const buttonForegroundColors = getButtonColors(aliasTokens.global.button, 'foreground');
 
   const textColor = {
     ...globalTextColor,
@@ -62,14 +73,14 @@ async function writeTextColors(figmaInput) {
   await writeTailwindConfig('./src/tailwind/textColor.ts', content);
 }
 
-async function writeBorderColors(figmaInput) {
-  const globalBorderColor = figmaInput.global.border;
+async function writeBorderColors(aliasTokens) {
+  const globalBorderColor = aliasTokens.global.border;
 
   for (let [tokenKey, tokenValue] of Object.entries(globalBorderColor)) {
-    globalBorderColor[tokenKey] = tokenValue.value;
+    globalBorderColor[tokenKey] = getCssVariable(tokenValue.value);
   }
 
-  const buttonBorderColors = getButtonColors(figmaInput.button, 'border');
+  const buttonBorderColors = getButtonColors(aliasTokens.global.button, 'border');
 
   const borderColor = {
     ...globalBorderColor,
@@ -86,34 +97,20 @@ async function writeBorderColors(figmaInput) {
   await writeTailwindConfig('./src/tailwind/ringColor.ts', ringContent);
 }
 
-async function writeBackgroundColors(figmaInput) {
-  // Page background
-  // TODO hardcoded value because it's missing from the tokens
-  const pageBackground = {
-    'page': {
-      'primary': "#F9FAFB",
-      'secondary': "#FFFFFF", 
-    }
-  }
-
+async function writeBackgroundColors(aliasTokens) {
   // Normal background
-  const backgroundColors = figmaInput.global.background;
+  const backgroundColors = aliasTokens.global.background;
 
   for (let [variantKey] of Object.entries(backgroundColors)) {
     for (let [tokenKey, tokenValue] of Object.entries(backgroundColors[variantKey])) {
-      backgroundColors[variantKey][tokenKey] = tokenValue.value;
+      backgroundColors[variantKey][tokenKey] = getCssVariable(tokenValue.value);
     }
   }
 
-  // TODO hardcoded value because it's missing from the tokens
-  backgroundColors.primary.default = "#FFFFFF";
-  backgroundColors.secondary.default = "#ECF1F1";
-
   // Button background
-  const buttonBackgroundColors = getButtonColors(figmaInput.button, 'background');
+  const buttonBackgroundColors = getButtonColors(aliasTokens.global.button, 'background');
 
   const backgroundColor = {
-    ...pageBackground,
     ...backgroundColors,
     button: buttonBackgroundColors,
   }
@@ -124,7 +121,7 @@ async function writeBackgroundColors(figmaInput) {
 }
 
 async function getFigmaInput() {
-  let content = await fs.readFile('./temp/figma-transformed.json', 'utf-8');
+  let content = await fs.readFile('./src/input/figma.json', 'utf-8');
   content = JSON.parse(content);
   return content;
 }
@@ -135,9 +132,9 @@ async function main() {
   const figmaInput = await getFigmaInput();
 
   await writeColors(figmaInput);
-  await writeTextColors(figmaInput);
-  await writeBorderColors(figmaInput);
-  await writeBackgroundColors(figmaInput);
+  await writeTextColors(figmaInput["alias tokens"]);
+  await writeBorderColors(figmaInput["alias tokens"]);
+  await writeBackgroundColors(figmaInput["alias tokens"]);
 
   return console.log("Finished building Tailwind config")
 }

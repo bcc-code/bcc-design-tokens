@@ -1,65 +1,29 @@
 export const backgroundColor = {
-  "page": {
-    "primary": "#F9FAFB",
-    "secondary": "#FFFFFF"
-  },
   "primary": {
-    "DEFAULT": "#FFFFFF"
+    "DEFAULT": "var(--neutral-0)",
+    "hover": "var(--isbre-50)",
+    "active": "var(--isbre-200)"
   },
   "secondary": {
-    "DEFAULT": "#ECF1F1"
+    "DEFAULT": "var(--isbre-100)",
+    "hover": "var(--isbre-200)",
+    "active": "var(--isbre-300)"
   },
   "tertiary": {
-    "DEFAULT": "#E6EDED",
-    "hover": "#E1E8E9",
-    "active": "#DCE4E4"
-  },
-  "danger": {
-    "DEFAULT": "#fff1f1",
-    "hover": "#ffe3e3",
-    "pressed": "#FFD8D6"
-  },
-  "success": {
-    "DEFAULT": "#eefff4",
-    "hover": "#d7ffe7",
-    "pressed": "#CCFFE0"
-  },
-  "warning": {
-    "DEFAULT": "#fefde8",
-    "hover": "#fffdc2",
-    "pressed": "#FFFC99"
-  },
-  "info": {
-    "DEFAULT": "#eef9ff",
-    "hover": "#d9f1ff",
-    "pressed": "#CCECFF"
-  },
-  "system": {
-    "DEFAULT": "#effefd",
-    "hover": "#c7fffa",
-    "pressed": "#BDFFF9"
+    "DEFAULT": "var(--isbre-400)",
+    "hover": "var(--isbre-500)",
+    "pressed": "var(--isbre-600)"
   },
   "button": {
     "primary": {
-      "DEFAULT": "#30715e",
-      "hover": "#2a5b4e",
-      "pressed": "#3e8e75",
-      "disabled": "#d1d5db",
-      "focused": "#30715e"
+      "DEFAULT": "var(--silver-tree-600)",
+      "hover": "var(--silver-tree-700)",
+      "pressed": "var(--silver-tree-500)"
     },
     "secondary": {
-      "DEFAULT": "#ffffff",
-      "hover": "#f3faf7",
-      "pressed": "#f3faf7",
-      "disabled": "#f9fafb",
-      "focused": "#f3faf7"
-    },
-    "tertiary": {
-      "DEFAULT": "#ffffff",
-      "hover": "#f3faf7",
-      "pressed": "#f3faf7",
-      "disabled": "#ffffff",
-      "focused": "#ffffff"
+      "DEFAULT": "var(--neutral-0)",
+      "hover": "var(--silver-tree-50)",
+      "pressed": "var(--silver-tree-50)"
     }
   }
 };
