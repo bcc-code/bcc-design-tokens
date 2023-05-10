@@ -18,8 +18,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:tokens && npm run build:tailwind && npm run build:package",
-    "build:tokens": "token-transformer src/input/figma.json temp/figma-transformed.json",
+    "build": "npm run build:tailwind && npm run build:package",
     "build:tailwind": "node ./src/scripts/convertToTailwind.cjs",
     "build:package": "tsc --declaration --emitDeclarationOnly -p tsconfig.compile.json && vite build",
     "preview": "vite preview"
@@ -28,7 +27,6 @@
     "tailwindcss": "^3.2.4"
   },
   "devDependencies": {
-    "token-transformer": "^0.0.30",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }
