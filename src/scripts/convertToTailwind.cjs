@@ -1,5 +1,9 @@
 const fs = require('fs').promises;
 
+// TODO add emphasis
+const semanticColors = ['success', 'warning', 'danger', 'info'];
+let semanticTokens = {};
+
 function getCssVariable(token) {
   if (!token.startsWith('{colors.')) {
     return token;
@@ -11,7 +15,7 @@ function getCssVariable(token) {
     .replaceAll('.', '-');
 }
 
-function getButtonColors(buttonVariants, type) {
+function getNestedColors(buttonVariants, type) {
   let buttonColors = {};
 
   // variantKey = primary, secondary etc.
@@ -55,16 +59,22 @@ async function writeColors(figmaInput) {
 }
 
 async function writeTextColors(aliasTokens) {
+  // Global text colors
   const globalTextColor = aliasTokens.global.foreground;
 
   for (let [tokenKey, tokenValue] of Object.entries(globalTextColor)) {
     globalTextColor[tokenKey] = getCssVariable(tokenValue.value);
   }
 
-  const buttonForegroundColors = getButtonColors(aliasTokens.global.button, 'foreground');
+  // Semantic text colors
+  const semanticForegroundColors = getNestedColors(semanticTokens, 'foreground');
+
+  // Button text colors
+  const buttonForegroundColors = getNestedColors(aliasTokens.global.button, 'foreground');
 
   const textColor = {
     ...globalTextColor,
+    ...semanticForegroundColors,
     button: buttonForegroundColors,
   }
 
@@ -74,16 +84,22 @@ async function writeTextColors(aliasTokens) {
 }
 
 async function writeBorderColors(aliasTokens) {
+  // Global border
   const globalBorderColor = aliasTokens.global.border;
 
   for (let [tokenKey, tokenValue] of Object.entries(globalBorderColor)) {
     globalBorderColor[tokenKey] = getCssVariable(tokenValue.value);
   }
 
-  const buttonBorderColors = getButtonColors(aliasTokens.global.button, 'border');
+  // Semantic border
+  const semanticBorderColors = getNestedColors(semanticTokens, 'border');
+
+  // Button border
+  const buttonBorderColors = getNestedColors(aliasTokens.global.button, 'border');
 
   const borderColor = {
     ...globalBorderColor,
+    ...semanticBorderColors,
     button: buttonBorderColors,
   }
 
@@ -107,11 +123,15 @@ async function writeBackgroundColors(aliasTokens) {
     }
   }
 
+  // Semantic backgrounds
+  const semanticBackgroundColors = getNestedColors(semanticTokens, 'background');
+
   // Button background
-  const buttonBackgroundColors = getButtonColors(aliasTokens.global.button, 'background');
+  const buttonBackgroundColors = getNestedColors(aliasTokens.global.button, 'background');
 
   const backgroundColor = {
     ...backgroundColors,
+    ...semanticBackgroundColors,
     button: buttonBackgroundColors,
   }
 
@@ -126,10 +146,18 @@ async function getFigmaInput() {
   return content;
 }
 
+function setSemanticTokens(aliasTokens) {
+  semanticColors.forEach(semanticColor => {
+    semanticTokens[semanticColor] = aliasTokens[semanticColor];
+  });
+}
+
 async function main() {
   console.log("Building Tailwind config elements...")
 
   const figmaInput = await getFigmaInput();
+
+  setSemanticTokens(figmaInput["alias tokens"]);
 
   await writeColors(figmaInput);
   await writeTextColors(figmaInput["alias tokens"]);

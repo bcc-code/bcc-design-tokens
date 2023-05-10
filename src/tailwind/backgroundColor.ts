@@ -14,6 +14,18 @@ export const backgroundColor = {
     "hover": "var(--isbre-500)",
     "pressed": "var(--isbre-600)"
   },
+  "success": {
+    "DEFAULT": "var(--green-50)"
+  },
+  "warning": {
+    "DEFAULT": "var(--yellow-50)"
+  },
+  "danger": {
+    "DEFAULT": "var(--red-50)"
+  },
+  "info": {
+    "DEFAULT": "var(--blue-50)"
+  },
   "button": {
     "primary": {
       "DEFAULT": "var(--silver-tree-600)",
