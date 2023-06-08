@@ -1,10 +1,12 @@
 # @bcc-code/design-tokens
 A collection of tokens from the BCC design system.
 
+> **Warning** This package has been deprecated as its functionality is now directly available in the components package. See the [release notes](https://github.com/bcc-code/bcc-design-components/releases/tag/v0.13.0) and the current [components documentation](https://developer.bcc.no/bcc-design/components/)
+
 [![version](https://img.shields.io/npm/v/@bcc-code/design-tokens)](https://github.com/bcc-code/bcc-design-tokens/releases) [![license](https://img.shields.io/npm/l/@bcc-code/design-tokens)](https://github.com/bcc-code/bcc-design-tokens/blob/main/LICENSE)
 
 ## Installation & Usage
-Refer to the [documentation](https://developer.bcc.no/bcc-design/tokens) for installation instructions and usage information.
+This package is deprecated and should no longer be installed. Instead refer to the current [components documentation](https://developer.bcc.no/bcc-design/components/).
 
 ## Project structure
 All code is in the `src` folder. To `input` the exported tokens from Figma are saved. This file is checked in as well to enable using GitHub as a sync provider.
